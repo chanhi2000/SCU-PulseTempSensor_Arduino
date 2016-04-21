@@ -52,7 +52,8 @@ void interruptSetup(){
 	ICR1 = 16000;  // TRIGGER TIMER INTERRUPT EVERY 2mS  
 	sei();         // MAKE SURE GLOBAL INTERRUPTS ARE ENABLED     
 } 
-      
+```
+
 Use the following ISR vector for the Timer1 setup above
 ```c    
 ISR(TIMER1_OVF_vect)
@@ -148,6 +149,7 @@ void interruptSetup(){
 	TIMSK1 = 0x02; 
 	sei();
 }
+```
  
 The only other thing you will need is the correct ISR vector in the next step.
 ```c       
@@ -169,6 +171,7 @@ void interruptSetup(){
 	bitSet(TIMSK,6);   // Enable interrupt on match between TCNT1 and OCR1A
 	sei();             // Enable global interrupts     
 } 
+```
 
 The only other thing you will need is the correct ISR vector in the next step.
 ```c
