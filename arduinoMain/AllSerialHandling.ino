@@ -1,16 +1,19 @@
 
 /*
- *  All Serial Handling Code, 
+ *  Sketch: AllSerialHandling.ino
+ *  
+ *  This is a serial handling Code for pulse sensor. 
  *  It's Changeable with the 'serialVisual' variable
  *  Set it to 'true' or 'false' when it's declared at start of code.  
+ *  
  */
 
 // Decide How To Output Serial. 
 void serialOutput(){   
- if (serialVisual == true){  
-     arduinoSerialMonitorVisual('-', Signal);   // goes to function that makes Serial Monitor Visualizer
- } else{
-      sendDataToSerial('S', Signal);     // goes to sendDataToSerial function
+ if (serialVisual == true) {  
+   arduinoSerialMonitorVisual('-', Signal);   // goes to function that makes Serial Monitor Visualizer
+ } else {
+   sendDataToSerial('S', Signal);     // goes to sendDataToSerial function
  }        
 }
 
@@ -30,16 +33,16 @@ void serialOutputWhenBeatHappens(){
 
 
 //  Sends Data to Pulse Sensor Processing App, Native Mac App, or Third-party Serial Readers. 
-void sendDataToSerial(char symbol, int data ){
+void sendDataToSerial(char symbol, int data ) {
     Serial.print(symbol);
     Serial.println(data);                
-  }
+}
 
 
 //  Code to Make the Serial Monitor Visualizer Work
 void arduinoSerialMonitorVisual(char symbol, int data ){    
-  const int sensorMin = 0;      // sensor minimum, discovered through experiment
-const int sensorMax = 1024;    // sensor maximum, discovered through experiment
+  const int sensorMin = 0;       // sensor minimum, discovered through experiment
+  const int sensorMax = 1024;    // sensor maximum, discovered through experiment
 
   int sensorReading = data;
   // map the sensor range to a range of 12 options:
@@ -87,5 +90,6 @@ const int sensorMax = 1024;    // sensor maximum, discovered through experiment
   
   } 
 }
+
 
 

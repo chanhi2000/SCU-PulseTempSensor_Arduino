@@ -1,10 +1,12 @@
-
-
-
+/*
+ *  Sketch: Interrupt.ino
+ *  
+ */
+ 
 volatile int rate[10];                    // array to hold last ten IBI values
 volatile unsigned long sampleCounter = 0; // used to determine pulse timing
 volatile unsigned long lastBeatTime = 0;  // used to find IBI
-volatile int P =512;                      // used to find peak in pulse wave, seeded
+volatile int P = 512;                      // used to find peak in pulse wave, seeded
 volatile int T = 512;                     // used to find trough in pulse wave, seeded
 volatile int thresh = 525;                // used to find instant moment of heart beat, seeded
 volatile int amp = 100;                   // used to hold amplitude of pulse waveform, seeded
@@ -24,12 +26,21 @@ void interruptSetup(){
 
 // THIS IS THE TIMER 2 INTERRUPT SERVICE ROUTINE. 
 // Timer 2 makes sure that we take a reading every 2 miliseconds
-ISR(TIMER2_COMPA_vect){                         // triggered when Timer2 counts to 124
+ISR(TIMER2_COMPA_vect){                       // triggered when Timer2 counts to 124
   cli();                                      // disable interrupts while we do this
   Signal = analogRead(pulsePin);              // read the Pulse Sensor 
   sampleCounter += 2;                         // keep track of the time in mS with this variable
   int N = sampleCounter - lastBeatTime;       // monitor the time since the last beat to avoid noise
 
+#if ENABLE_DEBUG_PULSE 
+  #if ENABLE_DEBUG_PULSEINFO
+    Serial.print("Counter reading (N): ");
+    Serial.println(N);
+    Serial.print("Pulse signal reading: ");
+    Serial.println(Signal);
+  #endif
+#endif
+  
   //  find the peak and trough of the pulse wave
   if(Signal < thresh && N > (IBI/5)*3){       // avoid dichrotic noise by waiting 3/5 of last IBI
     if (Signal < T){                          // T is the trough
@@ -43,13 +54,22 @@ ISR(TIMER2_COMPA_vect){                         // triggered when Timer2 counts 
 
   //  NOW IT'S TIME TO LOOK FOR THE HEART BEAT
   // signal surges up in value every time there is a pulse
-  if (N > 250){                                   // avoid high frequency noise
+  if (N > 250) {                                   // avoid high frequency noise
     if ( (Signal > thresh) && (Pulse == false) && (N > (IBI/5)*3) ){        
       Pulse = true;                               // set the Pulse flag when we think there is a pulse
-      digitalWrite(blinkPin,HIGH);                // turn on pin 13 LED
+      digitalWrite(blinkPin, HIGH);               // turn on pin 13 LED
       IBI = sampleCounter - lastBeatTime;         // measure time between beats in mS
       lastBeatTime = sampleCounter;               // keep track of time for next pulse
 
+  #if ENABLE_DEBUG_PULSE 
+    #if ENABLE_DEBUG_IBI
+      Serial.print("IBI: ");
+      Serial.println(IBI);
+      Serial.print("last beat time: ");
+      Serial.println(lastBeatTime);
+    #endif
+  #endif
+      
       if(secondBeat){                        // if this is the second beat, if secondBeat == TRUE
         secondBeat = false;                  // clear secondBeat flag
         for(int i=0; i<=9; i++){             // seed the running total to get a realisitic BPM at startup
@@ -75,6 +95,14 @@ ISR(TIMER2_COMPA_vect){                         // triggered when Timer2 counts 
 
       rate[9] = IBI;                          // add the latest IBI to the rate array
       runningTotal += rate[9];                // add the latest IBI to runningTotal
+  
+  #if ENABLE_DEBUG_PULSE
+    #if ENABLE_DEBUG_BPM
+      Serial.print("runningTotal: ");
+      Serial.println(runningTotal);
+    #endif
+  #endif
+      
       runningTotal /= 10;                     // average the last 10 IBI values 
       BPM = 60000/runningTotal;               // how many beats can fit into a minute? that's BPM!
       QS = true;                              // set Quantified Self flag 
@@ -83,7 +111,7 @@ ISR(TIMER2_COMPA_vect){                         // triggered when Timer2 counts 
   }
 
   if (Signal < thresh && Pulse == true){   // when the values are going down, the beat is over
-    digitalWrite(blinkPin,LOW);            // turn off pin 13 LED
+    digitalWrite(blinkPin, LOW);           // turn off pin 13 LED
     Pulse = false;                         // reset the Pulse flag so we can do it again
     amp = P - T;                           // get amplitude of the pulse wave
     thresh = amp/2 + T;                    // set thresh at 50% of the amplitude
@@ -91,7 +119,12 @@ ISR(TIMER2_COMPA_vect){                         // triggered when Timer2 counts 
     T = thresh;
   }
 
-  if (N > 2500){                           // if 2.5 seconds go by without a beat
+  
+  if (N > 2500) {                          // if 2.5 seconds go by without a beat
+  #if ENABLE_DEBUG_PULSE
+    Serial.println("Beat is not detected");
+    Serial.println("Resetting by default");
+  #endif
     thresh = 512;                          // set thresh default
     P = 512;                               // set P default
     T = 512;                               // set T default
