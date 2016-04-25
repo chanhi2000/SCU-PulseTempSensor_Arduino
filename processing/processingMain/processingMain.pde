@@ -20,6 +20,8 @@ Serial port;
 int Sensor;      // HOLDS PULSE SENSOR DATA FROM ARDUINO
 int IBI;         // HOLDS TIME BETWEN HEARTBEATS FROM ARDUINO
 int BPM;         // HOLDS HEART RATE VALUE FROM ARDUINO
+int temp_c;      // HOLDS TEMPERATURE VALUE IN CELSIUS FROM ARDUINO
+int temp_f;
 int[] RawY;      // HOLDS HEARTBEAT WAVEFORM DATA BEFORE SCALING
 int[] ScaledY;   // USED TO POSITION SCALED HEARTBEAT WAVEFORM
 int[] rate;      // USED TO POSITION BPM DATA WAVEFORM
@@ -104,13 +106,18 @@ void draw() {
 
   // PRINT THE DATA AND VARIABLE VALUES
   fill(eggshell);                                       // get ready to print text
-  text("Pulse Sensor Amped Visualizer 1.1",245,30);     // tell them what you are
+  text("Pulse + Temp Visualizer 1.2", 245, 30);         // tell them what you are
   text("IBI " + IBI + "mS",600,585);                    // print the time between heartbeats in mS
   text(BPM + " BPM",600,200);                           // print the Beats Per Minute
   text("Pulse Window Scale " + nf(zoom,1,2), 150, 585); // show the current scale of Pulse Window
+  text("CELSIUS " + temp_c, 600, 120);
+  text("FAHRENHEIT " + temp_f, 600, 100);
   
   // DO THE SCROLLBAR THINGS
   scaleBar.update (mouseX, mouseY);
   scaleBar.display();
+   
+  // DRAW TEMPERATURE VALUE
+  // drawTemp();
    
 }  //end of draw loop

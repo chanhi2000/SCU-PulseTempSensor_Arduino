@@ -36,4 +36,12 @@ void serialEvent(Serial port) {
     inData = inData.substring(1);        // cut off the leading 'Q'
     IBI = int(inData);                   // convert the string to usable int
   }
+  if (inData.charAt(0) == 'T') {
+    inData = inData.substring(1);
+    temp_c = int(inData);
+  }
+  if (inData.charAt(0) == 'F') {
+    inData = inData.substring(1);
+    temp_f = int(inData);
+  }
 }

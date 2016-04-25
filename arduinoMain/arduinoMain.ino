@@ -1,4 +1,4 @@
-
+  
 /*  
  *  Sketch: main.ino
  *  ----------------------  Notes ------------------------------------ 
@@ -65,12 +65,12 @@ void loop(){
   if (QS == true){       // A Heartbeat Was Found
                          // BPM and IBI have been Determined
                          // Quantified Self "QS" true when arduino finds a heartbeat
-    fadeRate = 255;      // Makes the LED Fade Effect Happen
+  fadeRate = 255;        // Makes the LED Fade Effect Happen
                          // Set 'fadeRate' Variable to 255 to fade LED with pulse
     
-    serialOutputWhenBeatHappens();   // A Beat Happened, Output that to serial.
-    serialOutputTemperature();     
-    QS = false;                      // reset the Quantified Self flag for next time    
+  serialOutputWhenBeatHappens();   // A Beat Happened, Output that to serial.
+  serialOutputTemperature();     
+  QS = false;                      // reset the Quantified Self flag for next time    
   }
   
   ledFadeToBeat();                   // Makes the LED Fade Effect Happen 

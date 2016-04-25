@@ -63,20 +63,25 @@ void drawBPM() {
 
 // DRAW HEART BEATING
 void drawHeart() {
-  
   fill(250,0,0);
   stroke(250,0,0);
   // the 'heart' variable is set in serialEvent when arduino sees a beat happen
   heart--;                    // heart is used to time how long the heart graphic swells when your heart beats
-  heart = max(heart,0);       // don't let the heart variable go into negative numbers
+  heart=max(heart,0);       // don't let the heart variable go into negative numbers
   
   if (heart > 0)              // if a beat happened recently,
   {              
     strokeWeight(8);          // make the heart big
   }
   
-  smooth();   // draw the heart with two bezier curves
+  smooth();                   // draw the heart with two bezier curves
   bezier(width-100,50, width-20,-20, width,140, width-100,150);
   bezier(width-100,50, width-190,-20, width-200,140, width-100,150);
   strokeWeight(1);          // reset the strokeWeight for next time
 }
+
+/*void drawTemp() {
+  fill(250,0,0);
+  stroke(250,0,0);
+  /
+}*/
