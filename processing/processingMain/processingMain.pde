@@ -12,10 +12,15 @@
  * https://github.com/WorldFamousElectronics/PulseSensor_Amped_Processing_Visualizer/ //<>//
  */
 
+import ddf.minim.*;
 import processing.serial.*;
+import processing.sound.*;
 PFont font;
 Scrollbar scaleBar;
 Serial port;
+SoundFile file;
+AudioSnippet alert;
+Minim minim;
 
 int Sensor;      // HOLDS PULSE SENSOR DATA FROM ARDUINO
 int IBI;         // HOLDS TIME BETWEN HEARTBEATS FROM ARDUINO
@@ -36,7 +41,7 @@ int PulseWindowHeight = 512;
 int BPMWindowWidth = 180;
 int BPMWindowHeight = 340;
 boolean beat = false;    // set when a heart beat is detected, then cleared when the BPM graph is advanced
-
+boolean alertNow = false;
 
 void setup() {
   size(700, 600);  // Stage size
@@ -70,6 +75,9 @@ void setup() {
   port = new Serial(this, Serial.list()[1], 115200);  // make sure Arduino is talking serial at this baud rate
   port.clear();            // flush buffer
   port.bufferUntil('\n');  // set buffer full flag on receipt of carriage return
+  
+  minim = new Minim(this);
+  alert = minim.loadSnippet("alert.wav");
 }
   
 void draw() {
@@ -119,5 +127,7 @@ void draw() {
    
   // DRAW TEMPERATURE VALUE
   // drawTemp();
-   
+  
+   playAlert();
+   delay(3);
 }  //end of draw loop

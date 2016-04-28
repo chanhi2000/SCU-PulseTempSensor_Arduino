@@ -42,7 +42,7 @@ volatile boolean Pulse = false;  // "True" when User's live heartbeat is detecte
 volatile boolean QS = false;     // becomes true when Arduoino finds a beat.
 
 // Regards Serial OutPut  -- Set This Up to your needs
-static boolean serialVisual = false;   // Set to 'false' by Default.  Re-set to 'true' to see Arduino Serial Monitor ASCII Visual Pulse 
+static boolean serialVisual = false;   // Set to 'false' by Default.  Re-setz to 'true' to see Arduino Serial Monitor ASCII Visual Pulse 
 
 
 void setup(){
