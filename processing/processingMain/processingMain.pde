@@ -42,6 +42,8 @@ int BPMWindowWidth = 180;
 int BPMWindowHeight = 340;
 boolean beat = false;    // set when a heart beat is detected, then cleared when the BPM graph is advanced
 boolean alertNow = false;
+boolean firstBeat = false;
+boolean secondBeat = false;
 
 void setup() {
   size(700, 600);  // Stage size
@@ -129,5 +131,5 @@ void draw() {
   // drawTemp();
   
    playAlert();
-   delay(3);
+   delay(100);
 }  //end of draw loop

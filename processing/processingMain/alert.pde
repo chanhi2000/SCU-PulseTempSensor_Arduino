@@ -6,24 +6,22 @@
  */
 
 void playAlert() {
-  
   // Pulse Alert condition
-  if (Sensor > 900 || Sensor < 300 ) {
-    alertNow = true; 
-  } else {
-    alertNow = false;
+  if (IBI > 1500 || IBI < 300) {
+    alertNow = true;
   }
   
-  playNow(alertNow);
-  
+  if (BPM > 140 || BPM < 30 ) {
+   alertNow = true; 
+  }
+
   // Temperature Alert Condition
   if (temp_c > 34 || temp_c < 18 ) {
     alertNow = true;
-  } else {
-    alertNow = false;
   }
-  
+
   playNow(alertNow);
+  alertNow = false;
 }
 
 
@@ -31,6 +29,6 @@ void playAlert() {
 void playNow(boolean trigger) {
   if (trigger) {
     alert.rewind();
-    alert.play();
+    alert.play(200);
   }
 }

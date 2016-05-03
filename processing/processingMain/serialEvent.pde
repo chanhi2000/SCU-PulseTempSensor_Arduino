@@ -32,16 +32,27 @@ void serialEvent(Serial port) {
     heart = 20;                          // begin heart image 'swell' timer
   }
   
-  if (inData.charAt(0) == 'Q'){            // leading 'Q' means IBI data 
+  if (inData.charAt(0) == 'Q'){          // leading 'Q' means IBI data 
     inData = inData.substring(1);        // cut off the leading 'Q'
     IBI = int(inData);                   // convert the string to usable int
   }
-  if (inData.charAt(0) == 'T') {
-    inData = inData.substring(1);
-    temp_c = int(inData);
+  
+  if (inData.charAt(0) == 'T') {         // leading 'T' means temperature in Celsius
+    inData = inData.substring(1);        // cut off the leading 'T'
+    temp_c = int(inData);                // convert the string to usable int
   }
-  if (inData.charAt(0) == 'F') {
+  
+  if (inData.charAt(0) == 'F') {         // leading 'F' means temperature in Fahrenheit
+    inData = inData.substring(1);        // cut off the leading 'F'
+    temp_f = int(inData);                // convert the string to usable int
+  }
+  
+  if (inData.charAt(0) == 'Y') {
     inData = inData.substring(1);
-    temp_f = int(inData);
+    firstBeat = boolean(inData);
+  }
+  if (inData.charAt(0) == 'Z') {
+    inData = inData.substring(1);
+    secondBeat = boolean(inData);
   }
 }

@@ -25,10 +25,19 @@ void serialOutputWhenBeatHappens(){
     Serial.print("BPM: ");
     Serial.print(BPM);
     Serial.println("  ");
- } else{
-    sendDataToSerial('B',BPM);   // send heart rate with a 'B' prefix
-    sendDataToSerial('Q',IBI);   // send time between beats with a 'Q' prefix
+ } else {
+    sendDataToSerial('B',BPM);         // send heart rate with a 'B' prefix
+    sendDataToSerial('Q',IBI);         // send time between beats with a 'Q' prefix
  }   
+}
+
+// boolean to integer
+int bool2int(boolean stat) {
+    if (stat) {
+      return 1;
+    } else {
+      return 0;
+    }
 }
 
 
