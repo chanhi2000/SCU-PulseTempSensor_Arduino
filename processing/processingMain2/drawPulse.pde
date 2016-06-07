@@ -8,16 +8,16 @@
 
 
 // DRAW THE PULSE WAVEFORM
-void drawPulse() { //<>// //<>// //<>//
+void drawPulse() { //<>// //<>//
   // prepare pulse data points    
   RawY[RawY.length-1] = (1023 - Sensor) - 212;   // place the new raw datapoint at the end of the array
   zoom = scaleBar.getPos();                      // get current waveform scale value
-  offset = map(zoom,0.5,1,150,0);                // calculate the offset needed at this scale
+  offset = map(zoom, 0.5, 1, 300, 0);                // calculate the offset needed at this scale
   
   for (int i = 0; i < RawY.length-1; i++) {      // move the pulse waveform by
     RawY[i] = RawY[i+1];                         // shifting all raw datapoints one pixel left
     float dummy = RawY[i] * zoom + offset;       // adjust the raw data to the selected scale
-    ScaledY[i] = constrain(int(dummy), 44, 556); // transfer the raw data array to the scaled array
+    ScaledY[i] = constrain(int(dummy), 80, 750); // transfer the raw data array to the scaled array
     // println(dummy + "\n");
     // println(ScaledY[i] + "\n");
   }

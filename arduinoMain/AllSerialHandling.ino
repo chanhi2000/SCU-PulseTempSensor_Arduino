@@ -19,7 +19,7 @@ void serialOutput(){
 
 
 //  Decides How To OutPut BPM and IBI Data
-void serialOutputWhenBeatHappens(){    
+void serialOutputWhenBeatHappens() {    
  if (serialVisual == true){            //  Code to Make the Serial Monitor Visualizer Work
     Serial.print("*** Heart-Beat Happened *** ");  //ASCII Art Madness
     Serial.print("BPM: ");
@@ -47,6 +47,10 @@ void sendDataToSerial(char symbol, int data ) {
     Serial.println(data);                
 }
 
+void sendDataToSerialTemp(char symbol, float data) {
+    Serial.print(symbol);
+    Serial.println(data);  
+}
 
 //  Code to Make the Serial Monitor Visualizer Work
 void arduinoSerialMonitorVisual(char symbol, int data ){    

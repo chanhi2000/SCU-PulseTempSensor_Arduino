@@ -8,7 +8,7 @@
 
 
 // DRAW THE PULSE WAVEFORM
-void drawPulse() { //<>// //<>// //<>//
+void drawPulse() { //<>// //<>//
   // prepare pulse data points    
   RawY[RawY.length-1] = (1023 - Sensor) - 212;   // place the new raw datapoint at the end of the array
   zoom = scaleBar.getPos();                      // get current waveform scale value

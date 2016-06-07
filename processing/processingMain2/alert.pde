@@ -4,7 +4,7 @@
  *  
  *  This sketch manages the serial event.
  */
-
+/*
 void playAlert() {
   // Pulse Alert condition
   if (IBI > 1300 || IBI < 260) {
@@ -16,7 +16,7 @@ void playAlert() {
   }
 
   // Temperature Alert Condition
-  if (temp_c > 40 || temp_c < 29 ) {
+  if (temp_c > 34 || temp_c < 18 ) {
     alertNow = true;
   }
 
@@ -31,3 +31,4 @@ void playNow(boolean trigger) {
     alert.play(200);
   }
 }
+*/

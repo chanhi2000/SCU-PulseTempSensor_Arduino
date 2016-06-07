@@ -39,12 +39,12 @@ void serialEvent(Serial port) {
   
   if (inData.charAt(0) == 'T') {         // leading 'T' means temperature in Celsius
     inData = inData.substring(1);        // cut off the leading 'T'
-    temp_c = float(inData) ;                // convert the string to usable int
+    temp_c = int(inData);                // convert the string to usable int
   }
   
   if (inData.charAt(0) == 'F') {         // leading 'F' means temperature in Fahrenheit
     inData = inData.substring(1);        // cut off the leading 'F'
-    temp_f = float(inData);                // convert the string to usable int
+    temp_f = int(inData);                // convert the string to usable int
   }
   
   if (inData.charAt(0) == 'Y') {

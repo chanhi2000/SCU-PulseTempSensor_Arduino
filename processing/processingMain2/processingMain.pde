@@ -25,8 +25,8 @@ Minim minim;
 int Sensor;      // HOLDS PULSE SENSOR DATA FROM ARDUINO
 int IBI;         // HOLDS TIME BETWEN HEARTBEATS FROM ARDUINO
 int BPM;         // HOLDS HEART RATE VALUE FROM ARDUINO
-float temp_c;      // HOLDS TEMPERATURE VALUE IN CELSIUS FROM ARDUINO
-float temp_f;
+int temp_c;      // HOLDS TEMPERATURE VALUE IN CELSIUS FROM ARDUINO
+int temp_f;
 int[] RawY;      // HOLDS HEARTBEAT WAVEFORM DATA BEFORE SCALING
 int[] ScaledY;   // USED TO POSITION SCALED HEARTBEAT WAVEFORM
 int[] rate;      // USED TO POSITION BPM DATA WAVEFORM
@@ -74,7 +74,7 @@ void setup() {
   println(Serial.list());    // print a list of available serial ports
   
   // choose the number between the [] that is connected to the Arduino
-  port = new Serial(this, Serial.list()[2], 115200);  // make sure Arduino is talking serial at this baud rate
+  port = new Serial(this, Serial.list()[1], 115200);  // make sure Arduino is talking serial at this baud rate
   port.clear();            // flush buffer
   port.bufferUntil('\n');  // set buffer full flag on receipt of carriage return
   
@@ -120,8 +120,8 @@ void draw() {
   text("IBI " + IBI + "mS",600,585);                    // print the time between heartbeats in mS
   text(BPM + " BPM",600,200);                           // print the Beats Per Minute
   text("Pulse Window Scale " + nf(zoom,1,2), 150, 585); // show the current scale of Pulse Window
-  text(temp_c + " °C", 600, 120);
-  text(temp_f + " °F", 600, 100);
+  text("CELSIUS " + temp_c, 600, 120);
+  text("FAHRENHEIT " + temp_f, 600, 100);
   
   // DO THE SCROLLBAR THINGS
   scaleBar.update (mouseX, mouseY);
@@ -131,4 +131,5 @@ void draw() {
   // drawTemp();
   
    playAlert();
+   delay(3);
 }  //end of draw loop

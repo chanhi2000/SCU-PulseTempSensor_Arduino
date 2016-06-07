@@ -22,8 +22,8 @@ void serialOutputTemperature() {
   if (serialVisual == true) {
     printTemp(temp_c);
   } else {
-    sendDataToSerial('T',temp_c);
-    sendDataToSerial('F', (temp_c * 9) / 5 + 32 );
+    sendDataToSerialTemp('T', temp_c);
+    sendDataToSerialTemp('F', (temp_c * 9) / 5 + 32 );
   }
   // printTemperature(voltage);
   // delay(1000);

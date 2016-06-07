@@ -1,5 +1,5 @@
 /*
- * Sketch: processingMain.pde
+ * Sketch: processingMain2.pde
  * 
  * THIS PROGRAM WORKS WITH PulseSensorAmped_Arduino-xx ARDUINO CODE
  * THE PULSE DATA WINDOW IS SCALEABLE WITH SCROLLBAR AT BOTTOM OF SCREEN
@@ -25,8 +25,8 @@ Minim minim;
 int Sensor;      // HOLDS PULSE SENSOR DATA FROM ARDUINO
 int IBI;         // HOLDS TIME BETWEN HEARTBEATS FROM ARDUINO
 int BPM;         // HOLDS HEART RATE VALUE FROM ARDUINO
-float temp_c;      // HOLDS TEMPERATURE VALUE IN CELSIUS FROM ARDUINO
-float temp_f;
+int temp_c;      // HOLDS TEMPERATURE VALUE IN CELSIUS FROM ARDUINO
+int temp_f;
 int[] RawY;      // HOLDS HEARTBEAT WAVEFORM DATA BEFORE SCALING
 int[] ScaledY;   // USED TO POSITION SCALED HEARTBEAT WAVEFORM
 int[] rate;      // USED TO POSITION BPM DATA WAVEFORM
@@ -36,8 +36,8 @@ color eggshell = color(255, 253, 248);
 int heart = 0;   // This variable times the heart image 'pulse' on screen
 
 //  THESE VARIABLES DETERMINE THE SIZE OF THE DATA WINDOWS
-int PulseWindowWidth = 490;
-int PulseWindowHeight = 512; 
+int PulseWindowWidth = 500;
+int PulseWindowHeight = 600; 
 int BPMWindowWidth = 180;
 int BPMWindowHeight = 340;
 boolean beat = false;    // set when a heart beat is detected, then cleared when the BPM graph is advanced
@@ -46,7 +46,7 @@ boolean firstBeat = false;
 boolean secondBeat = false;
 
 void setup() {
-  size(700, 600);  // Stage size
+  size(1200, 800);  // Stage size
   frameRate(100);  
   font = loadFont("Arial-BoldMT-24.vlw");
   textFont(font);
@@ -55,7 +55,7 @@ void setup() {
   ellipseMode(CENTER);  
   
   // Scrollbar constructor inputs: x,y,width,height,minVal,maxVal
-  scaleBar = new Scrollbar(400, 575, 180, 12, 0.5, 1.0);  // set parameters for the scale bar
+  scaleBar = new Scrollbar(400, 775, 180, 12, 0.5, 1.0);  // set parameters for the scale bar
   RawY = new int[PulseWindowWidth];          // initialize raw pulse waveform array
   ScaledY = new int[PulseWindowWidth];       // initialize scaled pulse waveform array
   rate = new int[BPMWindowWidth];            // initialize BPM waveform array
@@ -74,7 +74,7 @@ void setup() {
   println(Serial.list());    // print a list of available serial ports
   
   // choose the number between the [] that is connected to the Arduino
-  port = new Serial(this, Serial.list()[2], 115200);  // make sure Arduino is talking serial at this baud rate
+  port = new Serial(this, Serial.list()[1], 115200);  // make sure Arduino is talking serial at this baud rate
   port.clear();            // flush buffer
   port.bufferUntil('\n');  // set buffer full flag on receipt of carriage return
   
@@ -116,12 +116,12 @@ void draw() {
 
   // PRINT THE DATA AND VARIABLE VALUES
   fill(eggshell);                                       // get ready to print text
-  text("Pulse + Temp Visualizer 1.2", 245, 30);         // tell them what you are
+  text("Pulse + Temp Visualizer 1.2", 600, 30);         // tell them what you are
   text("IBI " + IBI + "mS",600,585);                    // print the time between heartbeats in mS
   text(BPM + " BPM",600,200);                           // print the Beats Per Minute
-  text("Pulse Window Scale " + nf(zoom,1,2), 150, 585); // show the current scale of Pulse Window
-  text(temp_c + " °C", 600, 120);
-  text(temp_f + " °F", 600, 100);
+  text("Pulse Window Scale " + nf(zoom,1,2), 150, 785); // show the current scale of Pulse Window
+  text("CELSIUS " + temp_c, 600, 140);
+  text("FAHRENHEIT " + temp_f, 600, 100);
   
   // DO THE SCROLLBAR THINGS
   scaleBar.update (mouseX, mouseY);
@@ -130,5 +130,5 @@ void draw() {
   // DRAW TEMPERATURE VALUE
   // drawTemp();
   
-   playAlert();
+   //playAlert();
 }  //end of draw loop
